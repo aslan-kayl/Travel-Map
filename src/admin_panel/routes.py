@@ -4,7 +4,6 @@ from fastapi import APIRouter, status, Depends
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from src.con.main import get_session
 from typing import List
-from src.auth.dependecies import AccessTokenBearer, RoleChecker
 from .services import AdminPanelService
 from .schemas import (
     Banner,
@@ -83,7 +82,7 @@ async def get_info(info_id: int, session: AsyncSession = Depends(get_session)):
     else:
         raise HTTPException(status_code=404, detail="Info not found")
 
-info_router.patch("/{info_id}", response_model=Info)
+@info_router.patch("/{info_id}", response_model=Info)
 async def update_info(info_id: int, info_update_data: Info, session:AsyncSession = Depends(get_session)):
     update_to_info = await admin_panel_service.update_info(info_id, session, info_update_data)
     if update_to_info is None:
