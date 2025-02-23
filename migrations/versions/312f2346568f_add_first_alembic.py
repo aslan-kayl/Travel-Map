@@ -1,8 +1,8 @@
-"""test
+"""add first alembic
 
-Revision ID: 123aef11873d
-Revises: 6ac47e3791fb
-Create Date: 2025-02-23 23:01:04.684580
+Revision ID: 312f2346568f
+Revises: 
+Create Date: 2025-02-24 01:56:30.040255
 
 """
 from typing import Sequence, Union
@@ -13,8 +13,8 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = '123aef11873d'
-down_revision: Union[str, None] = '6ac47e3791fb'
+revision: str = '312f2346568f'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 
