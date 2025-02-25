@@ -28,6 +28,7 @@ class Question(SQLModel, table=True):
     question: str
     answer: Optional["Answer"] = Relationship(
         back_populates="question",
+        cascade_delete=True,
         sa_relationship_kwargs={
             'uselist': False
         })

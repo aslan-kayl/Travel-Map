@@ -1,7 +1,12 @@
+from .answer.schemas import CreateAnswer
+from .info.schemas import CreateInfo
 from .models import Banner, Question, Answer, Info
-from .schemas import CreateBanner, CreateInfo, CreateQuestion, CreateAnswer
+from src.admin_panel.banner.schemas import CreateBanner, Banner
 from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import select
+
+from src.con.base64 import save_image_from_base64
+from .question.schemas import CreateQuestion
 
 
 class AdminPanelService:
@@ -23,6 +28,11 @@ class AdminPanelService:
 
     async def create_banner(self, session: AsyncSession, banner_data: CreateBanner):
         banner_data_dict = banner_data.model_dump()
+
+        image_base64 = banner_data_dict.get('image')
+        if banner_data_dict.get('image'):
+            file_path = save_image_from_base64(image_base64, output_dir='static/image/banner')
+            banner_data_dict['image'] = file_path
 
         new_banner = Banner(**banner_data_dict)
 
@@ -144,7 +154,6 @@ class AdminPanelService:
         else:
             return None
 
-
     async def get_all_answer(self, session: AsyncSession):
         statement = select(Answer).order_by(Answer.id)
         result = await session.exec(statement)
@@ -173,6 +182,7 @@ class AdminPanelService:
             return answer_to_update
         else:
             return None
+
     async def delete_answer(self, answer_id: int, session: AsyncSession):
         answer_to_delete = await self.get_answer(session, answer_id)
         if answer_to_delete is not None:

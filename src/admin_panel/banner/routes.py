@@ -1,15 +1,14 @@
 from fastapi import APIRouter, status, Depends, HTTPException
 from src.admin_panel.services import AdminPanelService
 from typing import List
-from src.admin_panel.schemas import Banner, CreateBanner
+from .schemas import Banner, CreateBanner
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from src.con.main import get_session
 
-
-
-
 banner_router = APIRouter()
 admin_panel_service = AdminPanelService()
+
+
 @banner_router.get("/", response_model=List[Banner])
 async def get_all_banners(session: AsyncSession = Depends(get_session)):
     banners = await admin_panel_service.get_all_banners(session)
