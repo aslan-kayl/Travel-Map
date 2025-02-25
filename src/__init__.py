@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-
+from src.admin_panel.banner.routes import banner_router
+from fastapi.staticfiles import StaticFiles
 
 version = "v1"
 
@@ -12,24 +13,12 @@ This REST API is able to;
 - Add tags to Books e.t.c.
     """
 
-version_prefix =f"/api/{version}"
+version_prefix = f"/api/{version}"
 
 app = FastAPI(
     title="Bookly",
     description=description,
     version=version,
-    license_info={"name": "MIT License", "url": "https://opensource.org/license/mit"},
-    contact={
-        "name": "Ssali Jonathan",
-        "url": "https://github.com/jod35",
-        "email": "ssalijonathank@gmail.com",
-    },
-    terms_of_service="httpS://example.com/tos",
-    openapi_url=f"{version_prefix}/openapi.json",
-    docs_url=f"{version_prefix}/docs",
-    redoc_url=f"{version_prefix}/redoc"
 )
-
-
-
-
+app.mount("/static", StaticFiles(directory="static"), name="static")
+app.include_router(banner_router, prefix=f"/api/{version}/banner", tags=["banner"])

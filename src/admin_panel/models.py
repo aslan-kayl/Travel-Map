@@ -16,7 +16,7 @@ class Banner(SQLModel, table=True):
 
 class Info(SQLModel, table=True):
     __tablename__ = "info"
-    id: int = Field(primary_key=True)
+    id: Optional[int] = Field(primary_key=True)
     icon: str
     description: str = Field(sa_column=Column(pg.TEXT))
     position: int = Field(default=1)

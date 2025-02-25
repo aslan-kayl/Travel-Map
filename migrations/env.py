@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from src.config import Config
 from alembic import context
 from sqlmodel import SQLModel
+from src.admin_panel.models import Banner, Question, Info, Answer
 
 
 database_url = Config.DATABASE_URL
